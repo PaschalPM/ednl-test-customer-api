@@ -12,7 +12,9 @@ class CustomerService
 
     public function getPaginatedCustomers(string $searchText = '', int $perPage = 20)
     {
-        $data =  $this->searchableCustomerModel($searchText)->paginate($perPage);
+        $data =  $this->searchableCustomerModel($searchText)
+            ->latest()
+            ->paginate($perPage);
         return $data;
     }
 
@@ -29,8 +31,8 @@ class CustomerService
     public function update(Customer $customer, array $data)
     {
 
-        if ($updatedCustomer = $customer->update($data)) {
-            return $updatedCustomer;
+        if ($customer->update($data)) {
+            return Customer::find($data['id'])->first();
         } else {
             abort(400, "Failed to update customer");
         }

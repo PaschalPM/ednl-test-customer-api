@@ -28,20 +28,21 @@ class CustomerRequest extends FormRequest
             'bvn' => 'required|string',
             'dob' => 'required|string',
             'residential_address' => 'required|string',
-            'state' => 'required| string',
-            'bankcode' => 'required| string',
-            'accountnumber' => 'required| string',
-            'company_id' => 'required| string',
-            'email' => 'required| string',
-            'city' => 'required| string',
-            'country' => 'required| string',
-            'id_card' => 'nullable| string',
-            'voters_card' => 'nullable| string',
-            'drivers_licence' => 'nullable| string',
+            'state' => 'required|string',
+            'bankcode' => 'required|string',
+            'accountnumber' => 'required|string',
+            'company_id' => 'required|string',
+            'email' => 'required| email|unique:customers,email',
+            'city' => 'required|string',
+            'country' => 'required|string',
+            'id_card' => 'nullable|string',
+            'voters_card' => 'nullable|string',
+            'drivers_licence' => 'nullable|string',
         ];
 
         if (request()->method() === 'PUT') {
             $rules['id'] = 'required|numeric';
+            $rules['email'] = 'required|email';
         }
 
         return $rules;
